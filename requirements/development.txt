@@ -1,0 +1,5 @@
+# Requirements for development.
+-r common.txt
+wheel
+pre-commit
+twine

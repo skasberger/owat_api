@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+SQLAlchemy==1.3.20
+tqdm==4.50.2
+python-dotenv==0.14.0
+psycopg2

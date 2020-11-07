@@ -1,0 +1,50 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+venv/
+
+# Misc
+*~
+.*.sw?
+.env/
+
+# Distribution / packaging
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Documentation
+docs/
+app/docs/build
+app/docs/Makefile
+
+# Unit test / coverage reports
+.tox
+.coverage
+.coverage.*
+.*cache
+coverage.xml
+*.cover
+pip-wheel-metadata
+pytest.ini
+
+# Personal
+.pypirc
+.env
+.env_psql
+notes*.md
+intern/
+owatapi.log*
+.pytest_cache/
+.cache
+app.db
+*.sqlite3
+.coverage
+migrations/script.py.mako
+migrations/README
+migrations/env.py
+migrations/alembic.ini

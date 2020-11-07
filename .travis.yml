@@ -1,0 +1,47 @@
+language:        python
+cache:           pip
+dist:            xenial
+
+matrix:
+  include:
+    - python:    3.5
+      env:       TOXENV=py35
+    - python:    3.6
+      env:       TOXENV=py36
+    - python:    3.7
+      env:       TOXENV=py37
+    - python:    3.6
+      env:       TOXENV=coverage
+    - python:    3.6
+      env:       TOXENV=coveralls
+
+branches:
+  only:
+    - master
+    - develop
+
+before_install:
+
+services:
+  - postgresql
+
+install:
+  - pip install --upgrade pip
+  - pip install tox-travis
+  - pip install coverage
+  - pip install coveralls
+
+before_script:
+  - psql -c "CREATE DATABASE travis_ci_test;" -U postgres
+
+script:
+  - tox
+
+after_success:
+  - coveralls
+
+notifications:
+  email:
+    recipients:
+      - mail@stefankasberger.at
+    on_success: change
