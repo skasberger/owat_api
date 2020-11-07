@@ -22,5 +22,5 @@ router.include_router(votes.router, prefix="/elections", tags=["elections"])
 
 
 @router.get("/")
-def get_root():
+async def get_root():
     return {"version": "1.0", "status": "OK", "name": "offenewahlen-at"}

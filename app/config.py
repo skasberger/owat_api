@@ -141,6 +141,10 @@ class UnixConfig(ProductionConfig):
         app.logger.addHandler(syslog_handler)
 
 
+def get_config_name():
+    return os.getenv("FASTAPI_CONFIG") or "default"
+
+
 config = {
     "development": DevelopmentConfig,
     "testing": TestingConfig,
