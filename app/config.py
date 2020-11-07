@@ -19,6 +19,7 @@ class Config(object):
     TRAVIS = False
     MIN_CONNECTIONS_COUNT = os.environ.get("MIN_CONNECTIONS_COUNT") or None
     MAX_CONNECTIONS_COUNT = os.environ.get("MAX_CONNECTIONS_COUNT") or None
+    TITLE = os.environ.get("TITLE") or "owat_api"
     # SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod

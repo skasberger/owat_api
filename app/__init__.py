@@ -9,7 +9,7 @@ Licensed under the MIT License.
 from fastapi import FastAPI
 from . import models
 from .database import init_db
-from config import config
+from .config import config
 import os
 
 __author__ = "Stefan Kasberger"
@@ -26,18 +26,16 @@ def create_app(config_name="default"):
     """Create application and load settings."""
     print("* Start Offene Wahlen AT API...")
 
-    FASTAPI_ENV = os.environ.get("FASTAPI_ENV")
-    SQLALCHEMY_DATABASE_URI = config[FASTAPI_ENV].SQLALCHEMY_DATABASE_URI
-    DEBUG = config[FASTAPI_ENV].DEBUG
-    API_PREFIX = config[FASTAPI_ENV].API_PREFIX
-    SECRET_KEY = config[FASTAPI_ENV].SECRET_KEY
-    ADMIN_EMAIL = config[FASTAPI_ENV].ADMIN_EMAIL
-    APP_EMAIL = config[FASTAPI_ENV].APP_EMAIL
-    TRAVIS = config[FASTAPI_ENV].TRAVIS
-    MIN_CONNECTIONS_COUNT = config[FASTAPI_ENV].MIN_CONNECTIONS_COUNT
-    MAX_CONNECTIONS_COUNT = config[FASTAPI_ENV].MAX_CONNECTIONS_COUNT
+    SQLALCHEMY_DATABASE_URI = config[config_name].SQLALCHEMY_DATABASE_URI
+    DEBUG = config[config_name].DEBUG
+    API_PREFIX = config[config_name].API_PREFIX
+    SECRET_KEY = config[config_name].SECRET_KEY
+    TITLE = config[config_name].TITLE
 
-    app = FastAPI(title="owat_api", debug=DEBUG)
+    app = FastAPI(title=TITLE, debug=DEBUG, description=__description__)
+
+    print(' * Settings "{0}": Loaded'.format(config_name))
+    print(" * Database: " + SQLALCHEMY_DATABASE_URI)
 
     from app.routers import router as api_router
 

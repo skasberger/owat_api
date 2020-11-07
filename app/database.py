@@ -6,10 +6,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from . import models, crud, schemas
 import os
+from .config import config
 
-
-SQLALCHEMY_DATABASE_URL = os.environ.get("SQLALCHEMY_DATABASE_URL")
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+FASTAPI_CONFIG = os.getenv("FASTAPI_CONFIG") or "default"
+SQLALCHEMY_DATABASE_URI = config[FASTAPI_CONFIG].SQLALCHEMY_DATABASE_URI
+engine = create_engine("postgresql://localhost/owat_dev")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 

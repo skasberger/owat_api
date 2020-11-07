@@ -101,8 +101,8 @@ setup(
     keywords=["fastapi", "api", "elections", "RESTful"],
     zip_safe=False,
     project_urls={
-        "Documentation": "https://ow-at_api.readthedocs.io/",
-        "Issue Tracker": "https://github.com/skasberger/ow-at_api/issues",
-        "Changelog": "https://ow-at_api.readthedocs.io/en/latest/",
+        "Documentation": "https://owat_api.readthedocs.io/",
+        "Issue Tracker": "https://github.com/skasberger/owat_api/issues",
+        "Changelog": "https://owat_api.readthedocs.io/en/latest/",
     },
 )
