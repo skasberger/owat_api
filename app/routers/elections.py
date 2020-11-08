@@ -3,9 +3,11 @@
 """"""
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from .. import crud
-from ..schemas import Election
-from ..database import get_db
+
+from app import crud
+from app.schemas import Election
+from app.database import get_db
+
 
 router = APIRouter()
 

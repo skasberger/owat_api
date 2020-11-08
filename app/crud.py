@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """"""
 from sqlalchemy.orm import Session
-from . import models, schemas
+from app import schemas, models
 
 
 def get_elections(db: Session, skip: int = 0, limit: int = 100):

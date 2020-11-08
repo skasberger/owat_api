@@ -3,8 +3,10 @@
 """main"""
 from fastapi import FastAPI
 import os
-from .config import config, get_config_name
-from . import __description__
+
+from app import __description__
+from app.config import config, get_config_name
+from app.routers import router as api_router
 
 
 def create_app(config_name="default"):
@@ -18,12 +20,9 @@ def create_app(config_name="default"):
     TITLE = config[config_name].TITLE
 
     app = FastAPI(title=TITLE, debug=DEBUG, description=__description__)
+    app.include_router(api_router, prefix=API_PREFIX)
 
     print(' * Settings "{0}": Loaded'.format(config_name))
     print(" * Database: " + SQLALCHEMY_DATABASE_URI)
-
-    from app.routers import router as api_router
-
-    app.include_router(api_router, prefix=API_PREFIX)
 
     return app
