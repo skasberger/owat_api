@@ -18,7 +18,7 @@ dist/
 MANIFEST
 
 # Documentation
-docs/
+/docs/
 app/docs/build
 app/docs/Makefile
 
