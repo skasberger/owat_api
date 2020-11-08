@@ -1,12 +1,11 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 """"""
-from fastapi import APIRouter
-from app import crud
-from app.schemas import Party
-from app.database import get_db
-from fastapi import Depends
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from .. import crud
+from ..schemas import Party
+from ..database import get_db
 
 router = APIRouter()
 

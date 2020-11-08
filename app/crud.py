@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """"""
 from sqlalchemy.orm import Session
-
 from . import models, schemas
 
 
@@ -19,7 +18,7 @@ def get_election_by_acronym(db: Session, acronym: str):
 
 
 def create_election(db: Session, election: schemas.Election):
-    db_election = models.Election(acronym=election.acronym)
+    db_election = models.Election(**election.dict())
     db.add(db_election)
     db.commit()
     db.refresh(db_election)
@@ -39,7 +38,7 @@ def get_party_by_name(db: Session, name: str):
 
 
 def create_party(db: Session, party: schemas.Party):
-    db_party = models.Party(name=party.name)
+    db_party = models.Party(**party.dict())
     db.add(db_party)
     db.commit()
     db.refresh(db_party)
