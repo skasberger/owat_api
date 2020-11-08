@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ScholCommLab/fhe-collector.svg?branch=master)](https://travis-ci.org/ScholCommLab/fhe-collector) [![Coverage Status](https://coveralls.io/repos/github/ScholCommLab/fhe-collector/badge.svg?branch=master)](https://coveralls.io/github/ScholCommLab/fhe-collector?branch=master) [![Documentation Status](https://readthedocs.org/projects/fhe-collector/badge/?version=latest)](https://fhe-collector.readthedocs.io/en/latest/) [![GitHub](https://img.shields.io/github/license/ScholCommLab/fhe-collector.svg)](https://opensource.org/licenses/MIT) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Build Status](https://travis-ci.org/skasberger/owat_api.svg?branch=master)](https://travis-ci.org/skasberger/owat_api) [![Coverage Status](https://coveralls.io/repos/github/skasberger/owat_api/badge.svg?branch=master)](https://coveralls.io/github/skasberger/owat_api?branch=master) [![Documentation Status](https://readthedocs.org/projects/owat_api/badge/?version=latest)](https://owat-api.readthedocs.io/en/latest/) [![GitHub](https://img.shields.io/github/license/skasberger/owat_api.svg)](https://opensource.org/licenses/MIT) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # Offene Wahlen AT API
 
@@ -68,11 +68,10 @@ Run the flask app:
 
 ```bash
 cd /PATH/TO/VHOST
-git clone https://github.com/ScholCommLab/fhe-collector.git
-cd fhe-collector
+git clone https://github.com/skasberger/owat_api.git
+cd owat_api
 python3 -m venv venv
 source venv/bin/activate
-pip install tox
 pip install -r requirements.txt
 pip install -r requirements/development.txt
 pre-commit install

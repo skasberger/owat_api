@@ -3,3 +3,4 @@
 wheel
 pre-commit
 twine
+tox
