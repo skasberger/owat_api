@@ -38,6 +38,7 @@ pytest.ini
 .env_psql
 notes*.md
 intern/
+data/
 owatapi.log*
 .pytest_cache/
 .cache
