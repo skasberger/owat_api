@@ -36,12 +36,14 @@ def app():
     # create the app with common test config
     if os.getenv("TRAVIS") or False:
         app = create_app("travis")
+        # reset the database
+        drop_db("travis")
+        init_db("travis")
     else:
         app = create_app("testing")
-
-    # reset the database
-    drop_db()
-    init_db()
+        # reset the database
+        drop_db("testing")
+        init_db("testing")
 
     # override dependencies
     app.dependency_overrides[get_db] = override_get_db

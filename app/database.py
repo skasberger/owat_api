@@ -41,33 +41,33 @@ def drop_db(config_name=None):
     Base.metadata.drop_all(bind=engine)
 
 
-def import_basedata_states():
+def import_basedata_states(config_name=None):
     pass
 
 
-# def import_basedata_parties():
+# def import_basedata_partiesconfig_name=None():
 #     pass
 #
 #
-# def import_basedata_nonparties():
+# def import_basedata_nonparties(config_name=None):
 #     pass
 #
 #
-# def import_basedata_reds():
+# def import_basedata_reds(config_name=None):
 #     pass
 #
 #
-# def import_basedata_districts():
+# def import_basedata_districts(config_name=None):
 #     pass
 #
 #
-# def import_basedata_municipalities():
+# def import_basedata_municipalities(config_name=None):
 #     pass
 #
 #
-# def import_result():
+# def import_result(config_name=None):
 #     pass
 #
 #
-# def import_basedata_lists():
+# def import_basedata_lists(config_name=None):
 #     pass
