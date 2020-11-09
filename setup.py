@@ -87,7 +87,7 @@ setup(
     long_description_content_type="text/markdown",
     license="MIT",
     url="https://github.com/skasberger/ow-at_api",
-    python_requires="3.7",
+    python_requires=">=3.7.*",
     platforms=["OS Independent"],
     classifiers=CLASSIFIERS,
     install_requires=INSTALL_REQUIREMENTS,
