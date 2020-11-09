@@ -52,8 +52,12 @@ class Tox(TestCommand):
 INSTALL_REQUIREMENTS = [
     # A string or list of strings specifying what other distributions need to
     # be installed when this one is.
-    "fastapi",
-    "uvicorn",
+    "fastapi==0.61.2",
+    "uvicorn==0.12.2",
+    "SQLAlchemy==1.3.20",
+    "python-dotenv==0.14.0",
+    "psycopg2==2.8.6",
+    "typer==0.3.2",
 ]
 
 SETUP_REQUIREMENTS = []
