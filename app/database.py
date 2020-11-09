@@ -31,13 +31,13 @@ def get_db():
         db.close()
 
 
-def init_db():
-    engine = get_engine()
+def init_db(config_name=None):
+    engine = get_engine(config_name)
     Base.metadata.create_all(bind=engine)
 
 
-def drop_db():
-    engine = get_engine()
+def drop_db(config_name=None):
+    engine = get_engine(config_name)
     Base.metadata.drop_all(bind=engine)
 
 
