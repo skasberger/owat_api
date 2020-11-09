@@ -17,7 +17,10 @@ TEST_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def override_get_db():
     try:
-        engine = get_engine()
+        if os.getenv("TRAVIS") or False:
+            engine = get_engine("travis")
+        else:
+            engine = get_engine("testing")
         TestingSessionLocal = sessionmaker(
             autocommit=False, autoflush=False, bind=engine
         )
@@ -32,10 +35,8 @@ def app():
     """Create and configure a new app instance for each test."""
     # create the app with common test config
     if os.getenv("TRAVIS") or False:
-        print("TRAVIS")
         app = create_app("travis")
     else:
-        print("TESTING")
         app = create_app("testing")
 
     # reset the database

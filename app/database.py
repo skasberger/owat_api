@@ -9,8 +9,8 @@ from app.config import get_config_name, config
 from app.models import Base
 
 
-def get_engine(config_name=False):
-    if not config_name:
+def get_engine(config_name=None):
+    if config_name is None:
         config_name = get_config_name()
     SQLALCHEMY_DATABASE_URI = config[config_name].SQLALCHEMY_DATABASE_URI
     return create_engine(SQLALCHEMY_DATABASE_URI)
