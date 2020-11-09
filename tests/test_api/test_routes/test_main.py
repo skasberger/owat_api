@@ -16,3 +16,17 @@ def test_api_root(client):
     resp = client.get("/api/")
     assert 200 == resp.status_code
     assert resp.json() == {"version": "1.0", "status": "OK", "name": "owat_api"}
+
+
+def test_docs_root(client):
+    """Start with a blank database."""
+
+    resp = client.get("/docs/")
+    assert 200 == resp.status_code
+
+
+def test_redoc_root(client):
+    """Start with a blank database."""
+
+    resp = client.get("/redoc/")
+    assert 200 == resp.status_code

@@ -1,6 +1,7 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 """main"""
+from dotenv import load_dotenv
 from fastapi import FastAPI
 import os
 
@@ -12,6 +13,8 @@ from app.routers import router as api_router
 def create_app(config_name="default"):
     """Create application and load settings."""
     print("* Start Offene Wahlen AT API...")
+
+    load_dotenv()
 
     SQLALCHEMY_DATABASE_URI = config[config_name].SQLALCHEMY_DATABASE_URI
     DEBUG = config[config_name].DEBUG

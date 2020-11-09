@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 """"""
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from app.database import Base
+from sqlalchemy.ext.declarative import declarative_base
+
+
+Base = declarative_base()
 
 
 class Party(Base):

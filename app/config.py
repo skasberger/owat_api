@@ -8,9 +8,6 @@ class Config(object):
     Setting the default environment settings.
     """
 
-    from dotenv import load_dotenv
-
-    load_dotenv()
     DEBUG = os.environ.get("DEBUG") or False
     API_PREFIX = "/api"
     SECRET_KEY = os.environ.get("SECRET_KEY") or "my-secret-key"
@@ -33,6 +30,7 @@ class DevelopmentConfig(Config):
     Database is sqlite file or a postgresql database string passed by an environment variable.
     """
 
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = (
         os.environ.get("DEV_DATABASE_URI") or "postgresql://localhost/owat_dev"
     )

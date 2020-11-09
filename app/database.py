@@ -3,19 +3,27 @@
 """Database"""
 import os
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 from app.config import get_config_name, config
+from app.models import Base
 
 
-SQLALCHEMY_DATABASE_URI = config[get_config_name()].SQLALCHEMY_DATABASE_URI
-engine = create_engine(SQLALCHEMY_DATABASE_URI)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+def get_engine(config_name=False):
+    if not config_name:
+        config_name = get_config_name()
+    SQLALCHEMY_DATABASE_URI = config[config_name].SQLALCHEMY_DATABASE_URI
+    return create_engine(SQLALCHEMY_DATABASE_URI)
+
+
+def get_SessionLocal():
+    engine = get_engine()
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    return SessionLocal
 
 
 def get_db():
+    SessionLocal = get_SessionLocal()
     db = SessionLocal()
     try:
         yield db
@@ -23,11 +31,13 @@ def get_db():
         db.close()
 
 
-def init_db(Base):
+def init_db():
+    engine = get_engine()
     Base.metadata.create_all(bind=engine)
 
 
-def drop_db(Base):
+def drop_db():
+    engine = get_engine()
     Base.metadata.drop_all(bind=engine)
 
 
