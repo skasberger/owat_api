@@ -36,7 +36,7 @@ Install
 
 **Requirements**
 
-Offene Wahlen AT API officially supports Python 3.7 - 3.8.
+Offene Wahlen AT API officially supports Python 3.7.
 
 Python packages:
 

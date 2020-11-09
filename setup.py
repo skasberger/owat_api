@@ -73,8 +73,6 @@ CLASSIFIERS = [
     "Operating System :: OS Independent",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Natural Language :: English",
 ]
@@ -89,7 +87,7 @@ setup(
     long_description_content_type="text/markdown",
     license="MIT",
     url="https://github.com/skasberger/ow-at_api",
-    python_requires=">=3.5",
+    python_requires="3.7",
     platforms=["OS Independent"],
     classifiers=CLASSIFIERS,
     install_requires=INSTALL_REQUIREMENTS,
