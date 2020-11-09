@@ -10,9 +10,12 @@ from app.config import config, get_config_name
 from app.routers import router as api_router
 
 
-def create_app(config_name="default"):
+def create_app(config_name=None):
     """Create application and load settings."""
     print("* Start Offene Wahlen AT API...")
+
+    if config_name is None:
+        config_name = get_config_name()
 
     load_dotenv()
 
