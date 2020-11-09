@@ -26,6 +26,3 @@ def create_app(config_name="default"):
     print(" * Database: " + SQLALCHEMY_DATABASE_URI)
 
     return app
-
-
-app = create_app(get_config_name())
