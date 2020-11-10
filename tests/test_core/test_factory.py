@@ -18,13 +18,16 @@ def test_config_development():
         app = create_app(config_name)
         config = get_config(config_name)
 
+        if os.getenv("TRAVIS") or False:
+            assert config.TRAVIS == True
+        else:
+            assert config.TRAVIS == False
         assert config.SQLALCHEMY_DATABASE_URI == "postgresql://localhost/owat_dev"
         assert config.API_PREFIX == "/api"
         assert config.DEBUG == True
         assert config.SECRET_KEY == "my-secret-key"
         assert config.ADMIN_EMAIL is None
         assert config.APP_EMAIL is None
-        assert config.TRAVIS == False
         assert config.MIN_CONNECTIONS_COUNT is None
         assert config.MAX_CONNECTIONS_COUNT is None
         assert config.TITLE == "owat_api"
