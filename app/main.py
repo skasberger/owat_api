@@ -20,20 +20,19 @@ def create_app(config_name=None):
 
     config = get_config(config_name)
     SQLALCHEMY_DATABASE_URI = config.SQLALCHEMY_DATABASE_URI
-    DEBUG = config.DEBUG
-    SECRET_KEY = config.SECRET_KEY
     TITLE = config.TITLE
+    DEBUG = config.DEBUG
 
     app = FastAPI(
         title=TITLE,
         debug=DEBUG,
         description=__description__,
         flask_config=config_name,
-        **config.dict()
+        **config.dict(),
     )
     app.include_router(api_router, prefix=config.API_PREFIX)
 
-    print(' * Settings "{0}": Loaded'.format(config_name))
-    print(" * Database: " + SQLALCHEMY_DATABASE_URI)
+    print(' * Setting "{0}" loaded'.format(config_name))
+    print(" * Database: {0}".format(SQLALCHEMY_DATABASE_URI))
 
     return app
