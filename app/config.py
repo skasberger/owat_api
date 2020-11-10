@@ -1,7 +1,6 @@
-import os
-from pydantic import BaseSettings, PostgresDsn
 from functools import lru_cache
-
+import os
+from pydantic import BaseSettings
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -127,13 +126,16 @@ def get_config_name():
     return os.getenv("FASTAPI_CONFIG") or "default"
 
 
-config = {
-    "development": DevelopmentConfig(),
-    "testing": TestingConfig(),
-    "production": ProductionConfig(),
-    "travis": TravisConfig(),
-    "docker": DockerConfig(),
-    "docker_compose": DockerComposeConfig(),
-    "unix": UnixConfig(),
-    "default": DevelopmentConfig(),
-}
+@lru_cache()
+def get_config(config_name="default"):
+    configs = {
+        "development": DevelopmentConfig(),
+        "testing": TestingConfig(),
+        "production": ProductionConfig(),
+        "travis": TravisConfig(),
+        "docker": DockerConfig(),
+        "docker_compose": DockerComposeConfig(),
+        "unix": UnixConfig(),
+        "default": DevelopmentConfig(),
+    }
+    return configs[config_name]

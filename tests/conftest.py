@@ -7,7 +7,7 @@ import os
 import pytest
 from sqlalchemy.orm import sessionmaker
 
-from app.database import init_db, get_engine, get_db, drop_db
+from app.database import get_engine, get_db, init_db, drop_db
 from app.main import create_app
 from app.models import Base
 

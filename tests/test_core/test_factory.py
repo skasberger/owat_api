@@ -4,12 +4,10 @@
 from fastapi import FastAPI
 import os
 import pytest
-from sqlalchemy.engine import Engine
-from sqlalchemy.orm.session import Session, sessionmaker
 
-from app.main import create_app
-from app.config import config
+from app.config import get_config
 from app.database import get_engine, get_SessionLocal
+from app.main import create_app
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
@@ -18,91 +16,73 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__fil
 def test_config_development():
     for config_name in ["default", "development"]:
         app = create_app(config_name)
-        engine = get_engine(config_name)
-        SessionLocal = get_SessionLocal()
+        config = get_config(config_name)
 
-        assert (
-            config[config_name].SQLALCHEMY_DATABASE_URI
-            == "postgresql://localhost/owat_dev"
-        )
-        assert config[config_name].API_PREFIX == "/api"
-        assert config[config_name].DEBUG == True
-        assert config[config_name].SECRET_KEY == "my-secret-key"
-        assert config[config_name].ADMIN_EMAIL is None
-        assert config[config_name].APP_EMAIL is None
-        assert config[config_name].TRAVIS == False
-        assert config[config_name].MIN_CONNECTIONS_COUNT is None
-        assert config[config_name].MAX_CONNECTIONS_COUNT is None
-        assert config[config_name].TITLE == "owat_api"
+        assert config.SQLALCHEMY_DATABASE_URI == "postgresql://localhost/owat_dev"
+        assert config.API_PREFIX == "/api"
+        assert config.DEBUG == True
+        assert config.SECRET_KEY == "my-secret-key"
+        assert config.ADMIN_EMAIL is None
+        assert config.APP_EMAIL is None
+        assert config.TRAVIS == False
+        assert config.MIN_CONNECTIONS_COUNT is None
+        assert config.MAX_CONNECTIONS_COUNT is None
+        assert config.TITLE == "owat_api"
         assert isinstance(app, FastAPI)
-        assert isinstance(engine, Engine)
-        assert isinstance(SessionLocal, sessionmaker)
 
 
 def test_config_testing():
     config_name = "testing"
     app = create_app(config_name)
-    engine = get_engine(config_name)
-    SessionLocal = get_SessionLocal()
+    config = get_config(config_name)
 
-    assert (
-        config[config_name].SQLALCHEMY_DATABASE_URI
-        == "postgresql://localhost/owat_test"
-    )
-    assert config[config_name].API_PREFIX == "/api"
-    assert config[config_name].DEBUG == False
-    assert config[config_name].SECRET_KEY == "secret-env-key"
-    assert config[config_name].ADMIN_EMAIL == "testing_admin@offenewahlen.at"
-    assert config[config_name].APP_EMAIL == "testing_app@offenewahlen.at"
-    assert config[config_name].TRAVIS == False
-    assert config[config_name].MIN_CONNECTIONS_COUNT == 10
-    assert config[config_name].MAX_CONNECTIONS_COUNT == 10
-    assert config[config_name].TITLE == "owat_api"
+    assert config.SQLALCHEMY_DATABASE_URI == "postgresql://localhost/owat_test"
+    assert config.API_PREFIX == "/api"
+    assert config.DEBUG == False
+    assert config.SECRET_KEY == "secret-env-key"
+    assert config.ADMIN_EMAIL == "testing_admin@offenewahlen.at"
+    assert config.APP_EMAIL == "testing_app@offenewahlen.at"
+    assert config.TRAVIS == False
+    assert config.MIN_CONNECTIONS_COUNT == 10
+    assert config.MAX_CONNECTIONS_COUNT == 10
+    assert config.TITLE == "owat_api"
     assert isinstance(app, FastAPI)
-    assert isinstance(engine, Engine)
-    assert isinstance(SessionLocal, sessionmaker)
 
 
 def test_config_travis():
     config_name = "travis"
     app = create_app(config_name)
-    engine = get_engine(config_name)
-    SessionLocal = get_SessionLocal()
+    config = get_config(config_name)
 
     assert (
-        config[config_name].SQLALCHEMY_DATABASE_URI
+        config.SQLALCHEMY_DATABASE_URI
         == "postgresql+psycopg2://postgres@localhost:5432/travis_ci_test"
     )
-    assert config[config_name].API_PREFIX == "/api"
-    assert config[config_name].DEBUG == False
-    assert config[config_name].SECRET_KEY == "my-secret-key"
-    assert config[config_name].ADMIN_EMAIL is None
-    assert config[config_name].APP_EMAIL is None
-    assert config[config_name].TRAVIS == True
-    assert config[config_name].MIN_CONNECTIONS_COUNT is None
-    assert config[config_name].MAX_CONNECTIONS_COUNT is None
-    assert config[config_name].TITLE == "owat_api"
+    assert config.API_PREFIX == "/api"
+    assert config.DEBUG == False
+    assert config.SECRET_KEY == "my-secret-key"
+    assert config.ADMIN_EMAIL is None
+    assert config.APP_EMAIL is None
+    assert config.TRAVIS == True
+    assert config.MIN_CONNECTIONS_COUNT is None
+    assert config.MAX_CONNECTIONS_COUNT is None
+    assert config.TITLE == "owat_api"
     assert isinstance(app, FastAPI)
-    assert isinstance(engine, Engine)
-    assert isinstance(SessionLocal, sessionmaker)
 
 
 def test_config_production():
     config_name = "production"
     app = create_app(config_name)
-    engine = get_engine(config_name)
-    SessionLocal = get_SessionLocal()
+    config = get_config(config_name)
 
-    assert config[config_name].API_PREFIX == "/api"
-    assert config[config_name].DEBUG == False
-    assert config[config_name].SECRET_KEY == "my-secret-key"
-    assert config[config_name].ADMIN_EMAIL is None
-    assert config[config_name].APP_EMAIL is None
-    assert config[config_name].TRAVIS == False
-    assert config[config_name].MIN_CONNECTIONS_COUNT is None
-    assert config[config_name].MAX_CONNECTIONS_COUNT is None
-    assert config[config_name].TITLE == "owat_api"
+    assert config.SQLALCHEMY_DATABASE_URI == "postgresql://localhost/owat"
+    assert config.API_PREFIX == "/api"
+    assert config.DEBUG == False
+    assert config.SECRET_KEY == "my-secret-key"
+    assert config.ADMIN_EMAIL is None
+    assert config.APP_EMAIL is None
+    assert config.TRAVIS == False
+    assert config.MIN_CONNECTIONS_COUNT is None
+    assert config.MAX_CONNECTIONS_COUNT is None
+    assert config.TITLE == "owat_api"
     assert isinstance(app, FastAPI)
-    assert config[config_name].SQLALCHEMY_DATABASE_URI == "postgresql://localhost/owat"
-    assert isinstance(engine, Engine)
-    assert isinstance(SessionLocal, sessionmaker)
