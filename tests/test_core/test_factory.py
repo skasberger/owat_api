@@ -36,13 +36,16 @@ def test_config_testing():
     app = create_app(config_name)
     config = get_config(config_name)
 
+    if os.getenv("TRAVIS") or False:
+        assert config.TRAVIS == True
+    else:
+        assert config.TRAVIS == False
     assert config.SQLALCHEMY_DATABASE_URI == "postgresql://localhost/owat_test"
     assert config.API_PREFIX == "/api"
     assert config.DEBUG == False
     assert config.SECRET_KEY == "secret-env-key"
     assert config.ADMIN_EMAIL == "testing_admin@offenewahlen.at"
     assert config.APP_EMAIL == "testing_app@offenewahlen.at"
-    assert config.TRAVIS == False
     assert config.MIN_CONNECTIONS_COUNT == 10
     assert config.MAX_CONNECTIONS_COUNT == 10
     assert config.TITLE == "owat_api"
@@ -54,6 +57,7 @@ def test_config_travis():
     app = create_app(config_name)
     config = get_config(config_name)
 
+    assert config.TRAVIS == True
     assert (
         config.SQLALCHEMY_DATABASE_URI
         == "postgresql+psycopg2://postgres@localhost:5432/travis_ci_test"
@@ -63,7 +67,6 @@ def test_config_travis():
     assert config.SECRET_KEY == "my-secret-key"
     assert config.ADMIN_EMAIL is None
     assert config.APP_EMAIL is None
-    assert config.TRAVIS == True
     assert config.MIN_CONNECTIONS_COUNT is None
     assert config.MAX_CONNECTIONS_COUNT is None
     assert config.TITLE == "owat_api"
@@ -75,13 +78,16 @@ def test_config_production():
     app = create_app(config_name)
     config = get_config(config_name)
 
+    if os.getenv("TRAVIS") or False:
+        assert config.TRAVIS == True
+    else:
+        assert config.TRAVIS == False
     assert config.SQLALCHEMY_DATABASE_URI == "postgresql://localhost/owat"
     assert config.API_PREFIX == "/api"
     assert config.DEBUG == False
     assert config.SECRET_KEY == "my-secret-key"
     assert config.ADMIN_EMAIL is None
     assert config.APP_EMAIL is None
-    assert config.TRAVIS == False
     assert config.MIN_CONNECTIONS_COUNT is None
     assert config.MAX_CONNECTIONS_COUNT is None
     assert config.TITLE == "owat_api"
