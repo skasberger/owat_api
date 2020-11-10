@@ -17,16 +17,22 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = get_config_name()
 
-    load_dotenv()
+    if config_name != "travis" or config_name != "testing":
+        load_dotenv()
 
     SQLALCHEMY_DATABASE_URI = config[config_name].SQLALCHEMY_DATABASE_URI
     DEBUG = config[config_name].DEBUG
-    API_PREFIX = config[config_name].API_PREFIX
     SECRET_KEY = config[config_name].SECRET_KEY
     TITLE = config[config_name].TITLE
 
-    app = FastAPI(title=TITLE, debug=DEBUG, description=__description__)
-    app.include_router(api_router, prefix=API_PREFIX)
+    app = FastAPI(
+        title=TITLE,
+        debug=DEBUG,
+        description=__description__,
+        flask_config=config_name,
+        **config[config_name].dict()
+    )
+    app.include_router(api_router, prefix=config[config_name].API_PREFIX)
 
     print(' * Settings "{0}": Loaded'.format(config_name))
     print(" * Database: " + SQLALCHEMY_DATABASE_URI)

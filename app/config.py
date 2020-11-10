@@ -1,23 +1,21 @@
 import os
+from pydantic import BaseSettings, PostgresDsn
+from functools import lru_cache
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config(object):
-    """
-    Setting the default environment settings.
-    """
-
-    DEBUG = os.environ.get("DEBUG") or False
-    API_PREFIX = "/api"
-    SECRET_KEY = os.environ.get("SECRET_KEY") or "my-secret-key"
-    ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL") or None
-    APP_EMAIL = os.environ.get("APP_EMAIL") or None
-    TRAVIS = False
-    MIN_CONNECTIONS_COUNT = os.environ.get("MIN_CONNECTIONS_COUNT") or None
-    MAX_CONNECTIONS_COUNT = os.environ.get("MAX_CONNECTIONS_COUNT") or None
-    TITLE = os.environ.get("TITLE") or "owat_api"
-    # SQLALCHEMY_TRACK_MODIFICATIONS = False
+class Config(BaseSettings):
+    DEBUG: bool = False
+    API_PREFIX: str = "/api"
+    SECRET_KEY: str = "my-secret-key"
+    ADMIN_EMAIL: str = None
+    APP_EMAIL: str = None
+    TRAVIS: bool = False
+    MIN_CONNECTIONS_COUNT: int = None
+    MAX_CONNECTIONS_COUNT: int = None
+    TITLE: str = "owat_api"
 
     @staticmethod
     def init_app(app):
@@ -25,15 +23,9 @@ class Config(object):
 
 
 class DevelopmentConfig(Config):
-    """
-    Setting the development environment settings.
-    Database is sqlite file or a postgresql database string passed by an environment variable.
-    """
+    SQLALCHEMY_DATABASE_URI: str = "postgresql://localhost/owat_dev"
 
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = (
-        os.environ.get("DEV_DATABASE_URI") or "postgresql://localhost/owat_dev"
-    )
+    DEBUG: bool = True
 
     @classmethod
     def init_app(cls, app):
@@ -41,34 +33,31 @@ class DevelopmentConfig(Config):
 
 
 class TestingConfig(Config):
-    SQLALCHEMY_DATABASE_URI = (
-        os.environ.get("TEST_DATABASE_URI") or "postgresql://localhost/owat_test"
-    )
+    SQLALCHEMY_DATABASE_URI: str = "postgresql://localhost/owat_test"
 
-    ADMIN_EMAIL = "testing@offenewahlen.at"
-    APP_EMAIL = "testing@offenewahlen.at"
+    DEBUG: bool = False
+
+    class Config:
+        env_file = ".env.testing"
+
+    @classmethod
+    def init_app(cls, app):
+        Config.init_app(app)
 
 
-class TravisConfig(TestingConfig):
-    """
-    Setting the test environment settings.
-    """
+class TravisConfig(Config):
+    SQLALCHEMY_DATABASE_URI: str = "postgresql+psycopg2://postgres@localhost:5432/travis_ci_test"
 
+    DEBUG: bool = False
     TRAVIS = True
-    # SQLALCHEMY_ECHO = True
-    SQLALCHEMY_DATABASE_URI = (
-        "postgresql+psycopg2://postgres@localhost:5432/travis_ci_test"
-    )
+
+    @classmethod
+    def init_app(cls, app):
+        Config.init_app(app)
 
 
 class ProductionConfig(Config):
-    """
-    Setting the production environment settings.
-    """
-
-    SQLALCHEMY_DATABASE_URI = (
-        os.environ.get("PROD_DATABASE_URI") or "postgresql://localhost/owat"
-    )
+    SQLALCHEMY_DATABASE_URI: str = "postgresql://localhost/owat"
 
     @classmethod
     def init_app(cls, app):
@@ -97,9 +86,7 @@ class ProductionConfig(Config):
 
 
 class DockerConfig(ProductionConfig):
-    SQLALCHEMY_DATABASE_URI = (
-        os.environ.get("DOCKER_DATABASE_URI") or "postgresql://localhost/owat"
-    )
+    SQLALCHEMY_DATABASE_URI: str = "postgresql://localhost/owat_docker"
 
     @classmethod
     def init_app(cls, app):
@@ -115,10 +102,7 @@ class DockerConfig(ProductionConfig):
 
 
 class DockerComposeConfig(DockerConfig):
-    SQLALCHEMY_DATABASE_URI = (
-        os.environ.get("DOCKER_COMPOSE_DATABASE_URI")
-        or "postgresql://postgres:postgres@localhost/owat"
-    )
+    SQLALCHEMY_DATABASE_URI: str = "postgresql://localhost/owat_dockercompose"
 
     @classmethod
     def init_app(cls, app):
@@ -144,12 +128,12 @@ def get_config_name():
 
 
 config = {
-    "development": DevelopmentConfig,
-    "testing": TestingConfig,
-    "production": ProductionConfig,
-    "travis": TravisConfig,
-    "docker": DockerConfig,
-    "docker_compose": DockerComposeConfig,
-    "unix": UnixConfig,
-    "default": DevelopmentConfig,
+    "development": DevelopmentConfig(),
+    "testing": TestingConfig(),
+    "production": ProductionConfig(),
+    "travis": TravisConfig(),
+    "docker": DockerConfig(),
+    "docker_compose": DockerComposeConfig(),
+    "unix": UnixConfig(),
+    "default": DevelopmentConfig(),
 }

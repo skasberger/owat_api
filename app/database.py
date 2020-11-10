@@ -12,8 +12,7 @@ from app.models import Base
 def get_engine(config_name=None):
     if config_name is None:
         config_name = get_config_name()
-    SQLALCHEMY_DATABASE_URI = config[config_name].SQLALCHEMY_DATABASE_URI
-    return create_engine(SQLALCHEMY_DATABASE_URI)
+    return create_engine(config[config_name].SQLALCHEMY_DATABASE_URI)
 
 
 def get_SessionLocal():
@@ -41,33 +40,33 @@ def drop_db(config_name=None):
     Base.metadata.drop_all(bind=engine)
 
 
-def import_basedata_states(config_name=None):
+def import_basedata_states():
     pass
 
 
-# def import_basedata_partiesconfig_name=None():
+# def import_basedata_parties():
 #     pass
 #
 #
-# def import_basedata_nonparties(config_name=None):
+# def import_basedata_nonparties():
 #     pass
 #
 #
-# def import_basedata_reds(config_name=None):
+# def import_basedata_reds():
 #     pass
 #
 #
-# def import_basedata_districts(config_name=None):
+# def import_basedata_districts():
 #     pass
 #
 #
-# def import_basedata_municipalities(config_name=None):
+# def import_basedata_municipalities():
 #     pass
 #
 #
-# def import_result(config_name=None):
+# def import_result():
 #     pass
 #
 #
-# def import_basedata_lists(config_name=None):
+# def import_basedata_lists():
 #     pass

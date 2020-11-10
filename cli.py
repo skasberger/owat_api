@@ -13,13 +13,13 @@ app = typer.Typer()
 
 @app.command("initdb")
 def initdb_command():
-    init_db(Base)
+    init_db()
     typer.echo("Initialized the database")
 
 
 @app.command("dropdb")
 def dropdb_command():
-    drop_db(Base)
+    drop_db()
     typer.echo("Dropped the database")
 
 
@@ -30,8 +30,8 @@ def deploy_command():
 
 @app.command("resetdb")
 def resetdb_command():
-    drop_db(Base)
-    init_db(Base)
+    drop_db()
+    init_db()
     typer.echo("Dataset dropped and initialized (reset)")
 
 

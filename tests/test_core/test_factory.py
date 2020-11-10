@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__fil
 def test_config_development():
     for config_name in ["default", "development"]:
         app = create_app(config_name)
-        engine = get_engine()
+        engine = get_engine(config_name)
         SessionLocal = get_SessionLocal()
 
         assert (
@@ -42,7 +42,7 @@ def test_config_development():
 def test_config_testing():
     config_name = "testing"
     app = create_app(config_name)
-    engine = get_engine()
+    engine = get_engine(config_name)
     SessionLocal = get_SessionLocal()
 
     assert (
@@ -51,22 +51,22 @@ def test_config_testing():
     )
     assert config[config_name].API_PREFIX == "/api"
     assert config[config_name].DEBUG == False
-    assert config[config_name].SECRET_KEY == "my-secret-key"
-    assert config[config_name].ADMIN_EMAIL == "testing@offenewahlen.at"
-    assert config[config_name].APP_EMAIL == "testing@offenewahlen.at"
+    assert config[config_name].SECRET_KEY == "secret-env-key"
+    assert config[config_name].ADMIN_EMAIL == "testing_admin@offenewahlen.at"
+    assert config[config_name].APP_EMAIL == "testing_app@offenewahlen.at"
     assert config[config_name].TRAVIS == False
-    assert config[config_name].MIN_CONNECTIONS_COUNT is None
-    assert config[config_name].MAX_CONNECTIONS_COUNT is None
+    assert config[config_name].MIN_CONNECTIONS_COUNT == 10
+    assert config[config_name].MAX_CONNECTIONS_COUNT == 10
     assert config[config_name].TITLE == "owat_api"
     assert isinstance(app, FastAPI)
     assert isinstance(engine, Engine)
     assert isinstance(SessionLocal, sessionmaker)
 
 
-def test_config_testing_travis():
+def test_config_travis():
     config_name = "travis"
     app = create_app(config_name)
-    engine = get_engine()
+    engine = get_engine(config_name)
     SessionLocal = get_SessionLocal()
 
     assert (
@@ -76,8 +76,8 @@ def test_config_testing_travis():
     assert config[config_name].API_PREFIX == "/api"
     assert config[config_name].DEBUG == False
     assert config[config_name].SECRET_KEY == "my-secret-key"
-    assert config[config_name].ADMIN_EMAIL == "testing@offenewahlen.at"
-    assert config[config_name].APP_EMAIL == "testing@offenewahlen.at"
+    assert config[config_name].ADMIN_EMAIL is None
+    assert config[config_name].APP_EMAIL is None
     assert config[config_name].TRAVIS == True
     assert config[config_name].MIN_CONNECTIONS_COUNT is None
     assert config[config_name].MAX_CONNECTIONS_COUNT is None
@@ -90,7 +90,7 @@ def test_config_testing_travis():
 def test_config_production():
     config_name = "production"
     app = create_app(config_name)
-    engine = get_engine()
+    engine = get_engine(config_name)
     SessionLocal = get_SessionLocal()
 
     assert config[config_name].API_PREFIX == "/api"
