@@ -7,7 +7,7 @@ import os
 
 from app import __description__
 from app.config import get_config, get_config_name
-from app.routers import router as api_router
+from app.api import router as api_router
 
 
 def create_app(config_name=None):
@@ -30,7 +30,7 @@ def create_app(config_name=None):
         flask_config=config_name,
         **config.dict(),
     )
-    app.include_router(api_router, prefix=config.API_PREFIX)
+    app.include_router(api_router, prefix="/api")
 
     print(' * Setting "{0}" loaded'.format(config_name))
     print(" * Database: {0}".format(SQLALCHEMY_DATABASE_URI))
