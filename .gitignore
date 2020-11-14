@@ -36,6 +36,7 @@ pytest.ini
 .pypirc
 .env
 .env_psql
+develop.py
 notes*.md
 intern/
 data/

@@ -7,7 +7,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(BaseSettings):
     DEBUG: bool = False
-    API_PREFIX: str = "/api"
     SECRET_KEY: str = "my-secret-key"
     ADMIN_EMAIL: str = None
     APP_EMAIL: str = None

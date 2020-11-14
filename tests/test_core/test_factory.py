@@ -29,8 +29,6 @@ def test_config_development():
             app.__dict__["extra"]["SQLALCHEMY_DATABASE_URI"]
             == "postgresql://localhost/owat_dev"
         )
-        assert config.API_PREFIX == "/api"
-        assert app.__dict__["extra"]["API_PREFIX"] == "/api"
         assert config.DEBUG == True
         assert app.__dict__["extra"]["DEBUG"] == True
         assert app._debug == True
@@ -68,8 +66,6 @@ def test_config_testing():
         app.__dict__["extra"]["SQLALCHEMY_DATABASE_URI"]
         == "postgresql://localhost/owat_test"
     )
-    assert config.API_PREFIX == "/api"
-    assert app.__dict__["extra"]["API_PREFIX"] == "/api"
     assert config.DEBUG == False
     assert app.debug == False
     assert app.__dict__["extra"]["DEBUG"] == False
@@ -106,8 +102,6 @@ def test_config_travis():
         app.__dict__["extra"]["SQLALCHEMY_DATABASE_URI"]
         == "postgresql+psycopg2://postgres@localhost:5432/travis_ci_test"
     )
-    assert config.API_PREFIX == "/api"
-    assert app.__dict__["extra"]["API_PREFIX"] == "/api"
     assert config.DEBUG == False
     assert app.__dict__["extra"]["DEBUG"] == False
     assert app._debug == False
@@ -145,8 +139,6 @@ def test_config_production():
         app.__dict__["extra"]["SQLALCHEMY_DATABASE_URI"]
         == "postgresql://localhost/owat"
     )
-    assert config.API_PREFIX == "/api"
-    assert app.__dict__["extra"]["API_PREFIX"] == "/api"
     assert config.DEBUG == False
     assert app.debug == False
     assert app.__dict__["extra"]["DEBUG"] == False
