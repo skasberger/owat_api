@@ -1,10 +1,10 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Test api/parties/."""
+"""Test api/districts/."""
 
 
-def test_parties_root(client):
+def test_districts_root(client):
     """Start with a blank database."""
 
-    resp = client.get("/api/v1/parties/")
+    resp = client.get("/api/v1/districts/")
     assert 200 == resp.status_code
