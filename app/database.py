@@ -41,33 +41,10 @@ def drop_db(config_name=None):
     Base.metadata.drop_all(bind=engine)
 
 
-def import_basedata_states():
-    pass
+from sqlalchemy.schema import DropTable
+from sqlalchemy.ext.compiler import compiles
 
 
-# def import_basedata_parties():
-#     pass
-#
-#
-# def import_basedata_nonparties():
-#     pass
-#
-#
-# def import_basedata_reds():
-#     pass
-#
-#
-# def import_basedata_districts():
-#     pass
-#
-#
-# def import_basedata_municipalities():
-#     pass
-#
-#
-# def import_result():
-#     pass
-#
-#
-# def import_basedata_lists():
-#     pass
+@compiles(DropTable, "postgresql")
+def _compile_drop_table(element, compiler, **kwargs):
+    return compiler.visit_drop_table(element) + " CASCADE"
